@@ -6,7 +6,7 @@
 
    - NEXT_PUBLIC_OPENAI_API_KEY (OpenAIのAPIキー)
    - REPLICATE_API_TOKEN (ReplicateのAPIキー)
-   - FACE_IMAGE_BASE_URL (例: `http://localhost:3000/personal`)
+   - FACE_IMAGE_BASE_URL (例: `https://localhost:3000/persona`)
 
 ### Google Cloud APIsのADC設定
 
@@ -37,13 +37,30 @@
 
 ---
 
-## 2. 起動
-
+## 2. 実行
+### 起動
 事前準備が完了したら、以下のコマンドでアプリケーションを起動します。
 ```
   npm run dev
 ```
 ブラウザで [http://localhost:3000](http://localhost:3000) を開いて、アプリケーションを確認してください。
+
+### 操作方法
+1. "Start"を押す（マイクの許可が求められることがあります）
+2. マイクからデジタルヒューマンにむかって話す
+3.  話す内容が終わったら"Chat"を押す
+4. 回答が返ってくるまで30秒程度待つ
+
+※"Stop"はマイクOFF機能です。"Chat"を押せばマイクはOFFになります。
+
+### ペルソナの設定
+`public/persona`にペルソナの情報があります。
+- Documents - RAGに入れる情報はこのディレクトリに入れてください。
+- face.jpg - デジタルヒューマンの顔写真です。
+- system_prompt_template.txt - システムプロンプトです。主にディベートの流れを記述しています。
+- interview_transcript.txt - インタビュースクリプトです。ペルソナの話口調や人格形成，経験を定義します。ディベートでは必須ではありません。
+
+ペルソナを追加するときは`perticipants.json`に追加してください．
 
 ---
 
@@ -59,3 +76,6 @@
 
 - Google CloudのText-to-Speech APIを使用しています。詳細および設定方法は以下のリンクを参照してください。
   - [Google Text-to-Speech AI](https://cloud.google.com/text-to-speech?hl=ja)
+
+### 音声からテキストを生成（Speech-to-Text）
+- Reactの音声認識ライブラリreact-speech-recognitionを使用しています．

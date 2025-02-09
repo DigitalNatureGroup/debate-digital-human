@@ -1,0 +1,33 @@
+{
+  "name": "digital-human-client",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --experimental-https",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@google-cloud/pubsub": "^4.0.6",
+    "@google-cloud/storage": "^7.5.0",
+    "@google-cloud/text-to-speech": "^5.0.1",
+    "@langchain/community": "^0.3.24",
+    "dotenv": "^16.4.7",
+    "fs": "^0.0.1-security",
+    "hnswlib-node": "^3.0.0",
+    "langchain": "^0.3.11",
+    "next": "^15.1.6",
+    "openai": "^4.14.2",
+    "pdf-parse": "^1.1.1",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-speech-recognition": "^3.10.0",
+    "regenerator-runtime": "^0.14.1",
+    "replicate": "^0.29.4"
+  },
+  "devDependencies": {
+    "eslint": "^8",
+    "eslint-config-next": "14.0.0"
+  }
+}

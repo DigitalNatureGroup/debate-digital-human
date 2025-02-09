@@ -1,0 +1,14 @@
+{
+  "participants": [
+    {
+      "id": "debate-llm-1",
+      "name": "Debate LLM Woman",
+      "gender": "female"
+    },
+    {
+        "id": "debate-llm-2",
+      "name" : "Debate LLM Man",
+      "gender" : "male"
+    }
+  ]
+}
