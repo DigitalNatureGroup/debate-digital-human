@@ -4,9 +4,11 @@
 
 1. プロジェクトルートに.env.localファイルを作成し、以下の3つの変数を登録してください。各APIキーはご自身で用意してください。
 
-   - NEXT_PUBLIC_OPENAI_API_KEY (OpenAIのAPIキー)
-   - REPLICATE_API_TOKEN (ReplicateのAPIキー)
-   - FACE_IMAGE_BASE_URL (例: `https://localhost:3000/persona`)
+| API-KEY | 説明 | 入手先 |
+| --- | --- | --- |
+|`NEXT_PUBLIC_OPENAI_API_KEY` | 回答を生成するためのOpenAIのAPIキー | https://openai.com/index/openai-api/ |
+| `REPLICATE_API_TOKEN` | ripsync動画を生成するための推論サービスReplicateのAPIキー | https://replicate.com/home |
+| `FACE_IMAGE_BASE_URL` | デジタルヒューマン画像が配置されたフォルダ | `https://localhost:3000/persona`と設定 |
 
 ### Google Cloud APIsのADC設定
 
