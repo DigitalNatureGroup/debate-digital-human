@@ -12,11 +12,11 @@
 
 ### Google Cloud APIsのADC設定
 
-アプリケーションでは、Google Cloud APIsのText-to-Speech APIを利用しています。これを利用するために、アプリケーションのデフォルト認証情報（ADC）の設定が必要です。  
+アプリケーションでは、Google Cloud APIsのText-to-Speech APIを利用しています。これを利用するために、アプリケーションのデフォルト認証情報（ADC:Application Default Credentials）の設定が必要です。  
 以下のリンクに沿ってADC認証を実施してください:  
 [ADC認証の手順 (Google Text-to-Speech クライアントライブラリ)](https://cloud.google.com/text-to-speech/docs/libraries?hl=ja#client-libraries-install-nodejs)
 
-※ 設定を行わないと、Google Cloud APIs関連のエラーが発生します。
+※ 認証を行わないと、Google Cloud APIs関連のエラーが発生します。
 
 【手順の概要】
 
@@ -27,8 +27,10 @@
 
 ### Google Cloud Storageの設定
 
-1. 使用するバケットを作成してください。
+1. 使用するバケットを作成してください。バケット名は`digital-human-client`にしてください。
 2. バケットに対して、ロール `roles/storage.objectUser` を付与してください。
+
+もし、バケットを任意の名前にしたい場合は[tts.jsのbucketName](https://github.com/DigitalNatureGroup/debate-digital-human/blob/0417bb55af53001b36d81e4c12a609b9c135fcff/pages/api/tts.js#L5)を変更してください。
 
 ### npmモジュールのインストール
 
@@ -53,16 +55,17 @@
 3.  話す内容が終わったら"Chat"を押す
 4. 回答が返ってくるまで30秒程度待つ
 
-※"Stop"はマイクOFF機能です。"Chat"を押せばマイクはOFFになります。
+※"Stop"はマイクOFF機能です。"Chat"を押すとマイクはOFFになります。
 
 ### ペルソナの設定
 `public/persona`にペルソナの情報があります。
+ペルソナを切り替えることでディベートのテーマや肯定・否定を選択できます。
 - Documents - RAGに入れる情報はこのディレクトリに入れてください。
 - face.jpg - デジタルヒューマンの顔写真です。
 - system_prompt_template.txt - システムプロンプトです。主にディベートの流れを記述しています。
-- interview_transcript.txt - インタビュースクリプトです。ペルソナの話口調や人格形成，経験を定義します。ディベートでは必須ではありません。
+- interview_transcript.txt - インタビュースクリプトです。ペルソナの口調や人格等の属性を定義します。ディベートでは必須ではありません。
 
-ペルソナを追加するときは`perticipants.json`に追加してください．
+ペルソナを追加するときは`perticipants.json`に`id`、`name`、`gender`を追加してください。
 
 ---
 
