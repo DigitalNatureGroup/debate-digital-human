@@ -4,6 +4,8 @@ const {Storage} = require('@google-cloud/storage');
 const storage = new Storage();
 const bucketName = 'digital-human-client';
 
+import { getCurrentDate } from '../../lib/dateUtils';
+
 // Import other required libraries
 const fs = require('fs');
 const util = require('util');
@@ -80,33 +82,6 @@ async function uploadFile(filePath) {
   await storage.bucket(bucketName).upload(filePath, options);
 }
 
-function getCurrentDate() {
-  const currentDate = new Date();
-  // 年
-  const year = currentDate.getFullYear();
-  // 月
-  const month = currentDate.getMonth() + 1;
-  // 日
-  const day = currentDate.getDate();
-  // 時間
-  const hour = currentDate.getHours();
-  // 分
-  const min = currentDate.getMinutes();
-  // 秒
-  const sec = currentDate.getSeconds();
-  // ミリ秒
-  const msec = currentDate.getMilliseconds();
-
-  const date =
-    year + '-' +
-    String(month).padStart(2, "0") + '-' +
-    String(day).padStart(2, "0") + '-' +
-    String(hour).padStart(2, "0") + '-' +
-    String(min).padStart(2, "0") + '-' +
-    String(sec).padStart(2, "0") + '-' +
-    String(msec).padStart(3, "0");
-  return date;
-}
 
 function getByteLength(str) {
   return encodeURI(str).split(/%..|./).length - 1;
