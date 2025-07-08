@@ -2,7 +2,7 @@
 const textToSpeech = require('@google-cloud/text-to-speech');
 const {Storage} = require('@google-cloud/storage');
 const storage = new Storage();
-const bucketName = 'digital-human-client';
+const bucketName = process.env.GCS_BUCKET_NAME;
 
 // Import other required libraries
 const fs = require('fs');

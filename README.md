@@ -2,13 +2,14 @@
 
 ### 環境変数の設定
 
-1. プロジェクトルートに.env.localファイルを作成し、以下の3つの変数を登録してください。各APIキーはご自身で用意してください。
+1. プロジェクトルートに.env.localファイルを作成し、以下の4つの変数を登録してください。各APIキーはご自身で用意してください。
 
 | API-KEY | 説明 | 入手先 |
 | --- | --- | --- |
 |`NEXT_PUBLIC_OPENAI_API_KEY` | 回答を生成するためのOpenAIのAPIキー | https://openai.com/index/openai-api/ |
 | `REPLICATE_API_TOKEN` | ripsync動画を生成するための推論サービスReplicateのAPIキー | https://replicate.com/home |
 | `FACE_IMAGE_BASE_URL` | デジタルヒューマン画像が配置されたフォルダ | `https://localhost:3000/persona`と設定 |
+| `GCS_BUCKET_NAME` | Google Cloud Storageで使用するバケット名 | 任意のバケット名を設定 |
 
 ### Google Cloud APIsのADC設定
 
@@ -27,10 +28,8 @@
 
 ### Google Cloud Storageの設定
 
-1. 使用するバケットを作成してください。バケット名は`digital-human-client`にしてください。
+1. 使用するバケットを作成してください。バケット名は任意です。環境変数`GCS_BUCKET_NAME`に設定します。
 2. バケットに対して、ロール `roles/storage.objectUser` を付与してください。
-
-もし、バケットを任意の名前にしたい場合は[tts.jsのbucketName](https://github.com/DigitalNatureGroup/debate-digital-human/blob/0417bb55af53001b36d81e4c12a609b9c135fcff/pages/api/tts.js#L5)を変更してください。
 
 ### npmモジュールのインストール
 
