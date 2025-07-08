@@ -51,12 +51,17 @@ export default function Home({ faceImageBaseUrl, participantData }) {
   const startButton = useRef(null);
 
   const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
+  const [inputText, setInputText] = useState('');
 
   if (!browserSupportsSpeechRecognition) {
     console.log("Speech Recognition is not supported.");
   } else {
     console.log("Speech Recognition is supported.");
   }
+
+  useEffect(() => {
+    setInputText(transcript);
+  }, [transcript]);
 
   useEffect(() => {
     if (videoRef.current && urls.videoUrl) {
@@ -76,7 +81,8 @@ export default function Home({ faceImageBaseUrl, participantData }) {
   async function chat() {
     // 計測開始
     const startTime = new Date();
-    const resultText = document.getElementById('result_text');
+
+    const resultText = inputText;
 
     // 選択中のペルソナ情報を取得
     const currentPersona = participantData.participants.find(p => p.id === selectedParticipant);
@@ -91,15 +97,16 @@ export default function Home({ faceImageBaseUrl, participantData }) {
   );
 
     // 現在の会話履歴にユーザーの発言を追加
-    const newMessages = [...messages, { role: 'user', content: resultText.value }];
-    console.log("User message:", resultText.value);
+    const newMessages = [...messages, { role: 'user', content: resultText }];
+    console.log("User message:", resultText);
     resetTranscript();
+    setInputText('');
     // Start ボタン 5秒間無効にする
     startButton.current.disabled = true;
 
     // API に送信するペイロードに、question に加えて docPath と systemPrompt を含める
-    const payload = { 
-      question: resultText.value,
+    const payload = {
+      question: resultText,
       docPath,
       systemPrompt
     };
@@ -250,7 +257,13 @@ export default function Home({ faceImageBaseUrl, participantData }) {
               （ステータス: {listening ? '認識中' : '待機中'}）
             </p>
           </div>
-          <textarea id="result_text" cols="200" rows="8" value={transcript} readOnly></textarea>
+          <textarea
+            id="result_text"
+            cols="200"
+            rows="8"
+            value={inputText}
+            onChange={(e) => setInputText(e.target.value)}
+          ></textarea>
           <div>
             <select name="participants" id="participants" onChange={handleSelectChange}>
               {participantData.participants.map(participant => (
