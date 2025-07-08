@@ -7,10 +7,25 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 import fsPromises from 'fs/promises';
 import path from 'path';
 
+// ディベートの進行段階
+const STAGES = [
+  '肯定側立論',
+  '否定側反対尋問',
+  '否定側立論',
+  '肯定側反対尋問',
+  '否定側反駁',
+  '肯定側反駁',
+  '否定側最終弁論',
+  '肯定側最終弁論',
+];
+
 // システムプロンプト生成用のヘルパー関数
-function generateSystemPrompt(name, systemTemplate, interviewTranscript) {
+function generateSystemPrompt(name, systemTemplate, interviewTranscript, stage) {
   return `${systemTemplate}
-  
+
+## 現在のディベート段階
+今は「${stage}」です。
+
 ### 対話データ
 \`\`\`
 ${interviewTranscript}
@@ -23,9 +38,10 @@ export default function Home({ faceImageBaseUrl, participantData }) {
   // 初期選択は participants.json 内の最初のペルソナ
   const initialParticipant = participantData.participants[0];
   const [selectedParticipant, setSelectedParticipant] = useState(initialParticipant.id);
+  const [selectedStage, setSelectedStage] = useState(STAGES[0]);
   // 初期プロンプトは各ペルソナの system_template と interview_transcript ファイルから生成する
   const [messages, setMessages] = useState([
-    { role: 'system', content: generateSystemPrompt(initialParticipant.name, initialParticipant.system_template, initialParticipant.interview_transcript) }
+    { role: 'system', content: generateSystemPrompt(initialParticipant.name, initialParticipant.system_template, initialParticipant.interview_transcript, STAGES[0]) }
   ]);
   const [gender, setGender] = useState(initialParticipant.gender);
   const [urls, setUrls] = useState({ audioUrl: '', videoUrl: '' });
@@ -66,12 +82,13 @@ export default function Home({ faceImageBaseUrl, participantData }) {
     const currentPersona = participantData.participants.find(p => p.id === selectedParticipant);
     // ペルソナに合わせたドキュメントのパスとシステムプロンプトを生成
     // ここでは、各ペルソナ用のドキュメントが public/persona/{participant.id} 以下にある前提です
-    const docPath = `public/persona/${currentPersona.id}/documents`;
-    const systemPrompt = generateSystemPrompt(
+  const docPath = `public/persona/${currentPersona.id}/documents`;
+  const systemPrompt = generateSystemPrompt(
       currentPersona.name,
       currentPersona.system_template,
-      currentPersona.interview_transcript
-    );
+      currentPersona.interview_transcript,
+      selectedStage
+  );
 
     // 現在の会話履歴にユーザーの発言を追加
     const newMessages = [...messages, { role: 'user', content: resultText.value }];
@@ -170,6 +187,15 @@ export default function Home({ faceImageBaseUrl, participantData }) {
     return result.video_url;
   }
 
+  function handleStageChange(e) {
+    const stage = e.target.value;
+    setSelectedStage(stage);
+    const currentPersona = participantData.participants.find(p => p.id === selectedParticipant);
+    setMessages([
+      { role: 'system', content: generateSystemPrompt(currentPersona.name, currentPersona.system_template, currentPersona.interview_transcript, stage) }
+    ]);
+  }
+
   async function handleSelectChange(e) {
     const idx = e.target.selectedIndex;
     const personalData = participantData.participants[idx];
@@ -177,7 +203,7 @@ export default function Home({ faceImageBaseUrl, participantData }) {
     setGender(personalData.gender);
     // 選択したペルソナのシステムプロンプトを再生成して上書き
     setMessages([
-      { role: 'system', content: generateSystemPrompt(personalData.name, personalData.system_template, personalData.interview_transcript) }
+      { role: 'system', content: generateSystemPrompt(personalData.name, personalData.system_template, personalData.interview_transcript, selectedStage) }
     ]);
   }
 
@@ -230,6 +256,13 @@ export default function Home({ faceImageBaseUrl, participantData }) {
               {participantData.participants.map(participant => (
                 <option key={participant.id} value={participant.id}>
                   {participant.name}
+                </option>
+              ))}
+            </select>
+            <select name="stage" id="stage" onChange={handleStageChange} value={selectedStage} style={{ marginLeft: '10px' }}>
+              {STAGES.map(stage => (
+                <option key={stage} value={stage}>
+                  {stage}
                 </option>
               ))}
             </select>
