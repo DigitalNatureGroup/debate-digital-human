@@ -109,8 +109,36 @@
 }
 
 .video-area {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   margin-top: 40px;
+}
+
+.info-area {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+  border: 2px solid #fff;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.teamNameText {
+  color: #ffffff;
+  font-size: 3rem;
+  margin: 0;
+  text-align: left;
+}
+
+.digitalHumanNameText {
+  color: #ffffff;
+  font-size: 4.0rem;
+  margin: 0;
+  text-align: left;
 }
 
 .control-area {

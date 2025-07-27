@@ -10,6 +10,9 @@
 | `REPLICATE_API_TOKEN` | ripsync動画を生成するための推論サービスReplicateのAPIキー | https://replicate.com/home |
 | `FACE_IMAGE_BASE_URL` | デジタルヒューマン画像が配置されたフォルダ | `https://localhost:3000/persona`と設定 |
 | `GCS_BUCKET_NAME` | Google Cloud Storageで使用するバケット名 | 任意のバケット名を設定 |
+| `TEAM_NAME` | チーム名を表示するための文字列 | 任意の名称 |
+
+デジタルヒューマンの名前は`participants.json`に記載された`name`フィールドから取得します。
 
 ### Google Cloud APIsのADC設定
 

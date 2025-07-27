@@ -34,7 +34,7 @@ ${interviewTranscript}
 大変重要必ず守れ**回答は300文字程度で生成しなさい**大変重要必ず守れ`;
 }
 
-export default function Home({ faceImageBaseUrl, participantData }) {
+export default function Home({ faceImageBaseUrl, participantData, teamName }) {
   // 初期選択は participants.json 内の最初のペルソナ
   const initialParticipant = participantData.participants[0];
   const [selectedParticipant, setSelectedParticipant] = useState(initialParticipant.id);
@@ -45,6 +45,7 @@ export default function Home({ faceImageBaseUrl, participantData }) {
   ]);
   const [gender, setGender] = useState(initialParticipant.gender);
   const [urls, setUrls] = useState({ audioUrl: '', videoUrl: '' });
+  const digitalHumanName = participantData.participants.find(p => p.id === selectedParticipant)?.name || '';
 
   const audioRef = useRef(null);
   const videoRef = useRef(null);
@@ -224,6 +225,10 @@ export default function Home({ faceImageBaseUrl, participantData }) {
       </Head>
       <div>
         <div className={styles["video-area"]}>
+          <div className={styles["info-area"]}>
+            <p className={styles.teamNameText}>{teamName}</p>
+            <p className={styles.digitalHumanNameText}>{digitalHumanName}</p>
+          </div>
           {urls.videoUrl ? (
             <>
               <audio ref={audioRef} style={{ display: 'none' }}></audio>
@@ -289,6 +294,7 @@ export default function Home({ faceImageBaseUrl, participantData }) {
 export async function getStaticProps() {
   // faceImageBaseUrl が存在しなければ空文字を設定
   const faceImageBaseUrl = process.env.FACE_IMAGE_BASE_URL ?? '';
+  const teamName = process.env.TEAM_NAME ?? '';
   const filePath = path.join(process.cwd(), 'participants.json');
   const data = await fsPromises.readFile(filePath);
   const objectData = JSON.parse(data);
@@ -319,6 +325,7 @@ export async function getStaticProps() {
     props: {
       faceImageBaseUrl,
       participantData: objectData,
+      teamName,
     }
   };
 }
