@@ -224,27 +224,29 @@ export default function Home({ faceImageBaseUrl, participantData, teamName }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <div className={styles["video-area"]}>
+        <div className={styles.mainDisplayArea}>
           <div className={styles["info-area"]}>
             <p className={styles.teamNameText}>{teamName}</p>
             <p className={styles.digitalHumanNameText}>{digitalHumanName}</p>
           </div>
-          {urls.videoUrl ? (
-            <>
-              <audio ref={audioRef} style={{ display: 'none' }}></audio>
-              <video ref={videoRef} width="900" height="600" muted onEnded={() => {
-                setTimeout(() => {
-                  startButton.current.disabled = false;
-                }, 30000);
-              }}>
-                <source src={urls.videoUrl} type="video/mp4" />
-              </video>
-            </>
-          ) : (
-            <div style={{ position: 'relative', width: '100%', height: '600px' }}>
-              <Image alt="カバー画像" src={`${faceImageBaseUrl}/${selectedParticipant}/face.jpg`} fill style={{ objectFit: 'contain', objectPosition: 'center' }} />
-            </div>
-          )}
+          <div className={styles["video-area"]}>
+            {urls.videoUrl ? (
+              <>
+                <audio ref={audioRef} style={{ display: 'none' }}></audio>
+                <video ref={videoRef} width="900" height="600" muted onEnded={() => {
+                  setTimeout(() => {
+                    startButton.current.disabled = false;
+                  }, 30000);
+                }}>
+                  <source src={urls.videoUrl} type="video/mp4" />
+                </video>
+              </>
+            ) : (
+              <div style={{ position: 'relative', width: '100%', height: '600px' }}>
+                <Image alt="カバー画像" src={`${faceImageBaseUrl}/${selectedParticipant}/face.jpg`} fill style={{ objectFit: 'contain', objectPosition: 'center' }} />
+              </div>
+            )}
+          </div>
         </div>
 
         <div className={styles["control-area"]}>
