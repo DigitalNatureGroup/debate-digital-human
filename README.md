@@ -86,3 +86,8 @@
 
 ### 音声からテキストを生成（Speech-to-Text）
 - Reactの音声認識ライブラリreact-speech-recognitionを使用しています．
+
+# Contributors
+このプログラムはDigital Nature Group支援の元、以下の人々によって実装されました。
+- [Ryosuke Hyakuta](https://github.com/ry0y4n)
+- [Komichi Takezawa](https://github.com/Komiiiii-2039)
