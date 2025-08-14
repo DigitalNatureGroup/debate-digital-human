@@ -1,5 +1,6 @@
-## 1. 事前準備
+<img width="1609" height="854" alt="home" src="https://github.com/user-attachments/assets/e409aacc-d858-415d-9cb2-b97c8ef2737e" />
 
+## 1. 事前準備
 ### 環境変数の設定
 
 1. プロジェクトルートに.env.localファイルを作成し、以下の4つの変数を登録してください。各APIキーはご自身で用意してください。
